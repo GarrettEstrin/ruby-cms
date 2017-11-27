@@ -1,0 +1,18 @@
+<div class="offers-container" style = "float: left; width: 300px; border: 1px solid black;height: 100%;">
+    Add Offer:
+    <%= form_for $new_offer do |f|%>
+    <%=  f.text_field :offer_name, :required => true, placeholder: "offer name", :class => 'form-size-small' %>
+    <br>
+    <%= f.submit "add offer", :class => 'kbd'%>
+    <% end %>
+
+    Offers: <br>
+    <% $offers.each do |key, value| %>
+        <h6 id="<%= key %><"><%= key %></h6>
+    <% end %>
+<div>
+
+
+
+
+
