@@ -7,10 +7,11 @@
     <% end %>
 
     Offers: <br>
-    <% $offers.each do |key, value| %>
-        <h6 class="offer" id="<%= key %>"><%= key %></h6>
+    <% if $offers %>
+        <% $offers.each do |key, value| %>
+            <h6 class="offer" id="<%= key %>"><%= key %></h6>
+        <% end %>
     <% end %>
-
 </div>
 <div class="offer-details" id="properties_container" style="float: left; width: 600px; border: 1px solid black; height: 100%;">
     <div id="properties">
@@ -58,6 +59,10 @@
 
     function removeOldProps(){
         console.log('remove prop');
+        els = document.getElementsByClassName('prop-container')
+        for(i=0;i<els.length;i++){
+            els[i].parentNode.removeChild(els[i]);
+        }
     }
 
     var offer_links = document.getElementsByClassName('offer');
