@@ -32,26 +32,36 @@
         removeOldProps();
         current_offer = offers[this.id];
         for (var key in current_offer) {
-            createAndAppendProp(key, current_offer[key]);
+            createAndAppendProp(key, current_offer[key], this.id);
         }
         
     }
 
-    function createAndAppendProp(key, value){
+    function createAndAppendProp(key, value, id){
         var prop_element = document.getElementById('properties');
         div = document.createElement('div')
         div.className = "prop-container";
         form = document.createElement('form');
-        form.action = "/editProp";
+        form.action = "/editoffer";
         form.method = 'POST';
         input = document.createElement('input');
         input.type = "text";
-        input.name = "prop";
+        input.name = key;
         input.value = value;
+        offer_name = document.createElement('input')
+        offer_name.name = "offer_name";
+        offer_name.value = id;
+        offer_name.type = "hidden";
+        prop_name = document.createElement('input');
+        prop_name.name = "prop_name";
+        prop_name.value = key;
+        prop_name.type = "hidden";
         submit = document.createElement('input');
         submit.type = "submit";
         submit.value = "save";
         form.appendChild(input);
+        form.appendChild(offer_name);
+        form.appendChild(prop_name);
         form.appendChild(submit);
         div.appendChild(form);
         document.getElementById('properties_container').insertBefore(div, prop_element);

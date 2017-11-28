@@ -8,6 +8,7 @@ class OfferBuilderController < ApplicationController
             end
         end
         $new_offer = String.new
+        puts $offer_details
     end
 
     def add_offer
@@ -31,9 +32,21 @@ class OfferBuilderController < ApplicationController
         $redis.set('offers', $offers.to_json)
         # set properties
         $properties["name"] = params[:offer_name]
-        $redis.set('offer:' + params[:offer_name], $properties.to_json)
+        $redis.set("offer:" + params[:offer_name], $properties.to_json)
         redirect_to offerbuilder_path
     end 
 
+    def edit_offer
+        puts params
+        if $redis.GET("offer:" + params[:offer_name])
+            puts "offer found"
+            $offer = JSON.parse $redis.GET("offer:" + params[:offer_name])
+        else
+            redirect_to offerbuilder_path            
+        end
+            $offer[params[:prop_name]] = params[params[:prop_name]]
+            $redis.SET("offer:" + params[:offer_name], $offer.to_json)
+        redirect_to offerbuilder_path
+    end
     
 end
