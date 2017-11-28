@@ -60,8 +60,10 @@
     function removeOldProps(){
         console.log('remove prop');
         els = document.getElementsByClassName('prop-container')
-        for(i=0;i<els.length;i++){
-            els[i].parentNode.removeChild(els[i]);
+        if(els !=[]){
+            for(i=0;i<els.length;i){
+                els[0].parentNode.removeChild(els[0]);
+            }
         }
     }
 
