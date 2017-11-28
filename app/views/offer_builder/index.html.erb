@@ -3,14 +3,73 @@
     <%= form_for $new_offer do |f|%>
     <%=  f.text_field :offer_name, :required => true, placeholder: "offer name", :class => 'form-size-small' %>
     <br>
-    <%= f.submit "add offer", :class => 'kbd'%>
+    <%= f.submit "add offer", :class => ''%>
     <% end %>
 
     Offers: <br>
     <% $offers.each do |key, value| %>
-        <h6 id="<%= key %><"><%= key %></h6>
+        <h6 class="offer" id="<%= key %>"><%= key %></h6>
     <% end %>
-<div>
+
+</div>
+<div class="offer-details" id="properties_container" style="float: left; width: 600px; border: 1px solid black; height: 100%;">
+    <div id="properties">
+        <form method="post" action="/addProp">
+        <input type="text" required>
+        <br>
+        <input type="submit" value="Add Prop">
+        </form>
+    </div>
+</div>
+
+<script>
+    text = '<%= $offer_details.to_json %>';
+    text = text.replace(/&quot;/g, '\"');
+    var offers = JSON.parse(text);
+    var current_offer;
+    function showOffer(){
+        removeOldProps();
+        current_offer = offers[this.id];
+        for (var key in current_offer) {
+            createAndAppendProp(key, current_offer[key]);
+        }
+        
+    }
+
+    function createAndAppendProp(key, value){
+        var prop_element = document.getElementById('properties');
+        div = document.createElement('div')
+        div.className = "prop-container";
+        form = document.createElement('form');
+        form.action = "/editProp";
+        form.method = 'POST';
+        input = document.createElement('input');
+        input.type = "text";
+        input.name = "prop";
+        input.value = value;
+        submit = document.createElement('input');
+        submit.type = "submit";
+        submit.value = "save";
+        form.appendChild(input);
+        form.appendChild(submit);
+        div.appendChild(form);
+        document.getElementById('properties_container').insertBefore(div, prop_element);
+    }
+
+    function removeOldProps(){
+        console.log('remove prop');
+    }
+
+    var offer_links = document.getElementsByClassName('offer');
+    for(i=0;i<offer_links.length;i++){
+        offer_links[i].addEventListener('click',showOffer)
+    }
+</script>
+
+
+
+
+
 
 
 
