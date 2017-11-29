@@ -15,10 +15,14 @@
 </div>
 <div class="offer-details" id="properties_container" style="float: left; width: 600px; border: 1px solid black; height: 100%;">
     <div id="properties">
-        <form method="post" action="/addProp">
-        <input type="text" required>
-        <br>
-        <input type="submit" value="Add Prop">
+        <form method="POST" action="/addprop" style="display: none;" id="addPropForm">
+            <h6>Add Property</h6>
+            <input type="text" name="prop_to_add_name" placeholder="Prop Name" required>
+            <br>
+            <input type="text" name="prop_to_add_value" placeholder="Prop Value" required>
+            <br>
+            <input type="hidden" name="offer_name" id="offerNameHF">
+            <input type="submit" value="Add Prop">
         </form>
     </div>
 </div>
@@ -30,6 +34,7 @@
     var current_offer;
     function showOffer(){
         removeOldProps();
+        appendOfferHFValue(this.id);
         current_offer = offers[this.id];
         for (var key in current_offer) {
             createAndAppendProp(key, current_offer[key], this.id);
@@ -38,7 +43,11 @@
     }
 
     function createAndAppendProp(key, value, id){
+        console.log(typeof key);
         var prop_element = document.getElementById('properties');
+        title = document.createElement('H6');
+        text = document.createTextNode(key);
+        title.appendChild(text);
         div = document.createElement('div')
         div.className = "prop-container";
         form = document.createElement('form');
@@ -59,6 +68,7 @@
         submit = document.createElement('input');
         submit.type = "submit";
         submit.value = "save";
+        form.appendChild(title);
         form.appendChild(input);
         form.appendChild(offer_name);
         form.appendChild(prop_name);
@@ -74,6 +84,10 @@
                 els[0].parentNode.removeChild(els[0]);
             }
         }
+    }
+    function appendOfferHFValue(offer){
+        document.getElementById('offerNameHF').value = offer;
+        document.getElementById('addPropForm').style.display = "block";
     }
 
     var offer_links = document.getElementsByClassName('offer');

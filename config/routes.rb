@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'offerbuilder' => 'offer_builder#index'
   post 'offerbuilder' => 'offer_builder#add_offer'
   post 'editoffer' => 'offer_builder#edit_offer'
+  post 'addprop' => 'offer_builder#add_prop'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
